@@ -1,5 +1,2 @@
 <inventory> 
-   <!-- Excluding because of https://bugs.openjdk.java.net/browse/JDK-8185830.
-        Reinstate when the bug is fixed. -->
-   <junit class="net.adoptopenjdk.test.concurrent.ConcurrentSkipListSetTest"/>
 </inventory>

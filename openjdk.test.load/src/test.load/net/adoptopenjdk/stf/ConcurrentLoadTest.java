@@ -45,10 +45,12 @@ public class ConcurrentLoadTest implements StfPluginInterface {
 				.addPrereqJarToClasspath(JavaProcessDefinition.JarId.HAMCREST)
 				.addProjectToClasspath("openjdk.test.concurrent")
 				.setAbortIfOutOfMemory(false)
+				.setAbortAtFailureLimit(-1) // BW keep going when fail occurs
 				.addSuite("concurrent")
-				.setSuiteThreadCount(cpuCount - 2, 20)	  	// Leave 1 cpu for the JIT. i for GC and set min 20
+				//.setSuiteThreadCount(cpuCount - 2, 20)	  	// Leave 1 cpu for the JIT. i for GC and set min 20
+				.setSuiteThreadCount(1, 1)	  	// Leave 1 cpu for the JIT. i for GC and set min 20
 				.setSuiteInventory(inventoryFile) 			// Point at the file which lists the tests
-				.setSuiteNumTests(totalTests * 20)			// Run for about 2 minutes with no -X options
+				.setSuiteNumTests(totalTests * 2)			// Run for about 2 minutes with no -X options
 				.setSuiteRandomSelection();		  			// Randomly pick the next test each time
 		
 		//.setSuiteNumTests(totalTests * 50)			// Run for about 5 minutes

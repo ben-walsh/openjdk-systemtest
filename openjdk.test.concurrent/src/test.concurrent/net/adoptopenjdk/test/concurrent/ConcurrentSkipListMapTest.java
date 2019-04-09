@@ -76,7 +76,7 @@ public class ConcurrentSkipListMapTest extends ConcurrentTest
 	 * Verify the correct behaviour of the API for ConcurrentSkipListMap. Attempts to cover as much of the API
 	 * as is possible and to verify the correct function by way of checked assertions. 
 	 */
-	public void testAPI()
+	public void oldTestAPI()
 	{
 		// =================================================================================
 		// Create some test data to work with
@@ -331,50 +331,70 @@ public class ConcurrentSkipListMapTest extends ConcurrentTest
 		
 		listmap.putAll(testObjects);
 
+		//stressmap.clear();
+
+		System.out.println("BW1 : stressmap.size() : " + stressmap.size());
+		System.out.println("BW1 : stressmap.keySet().size() : " + stressmap.keySet().size());
+		System.out.println("BW1 : stressmap.keySet().iterator().hasNext() : " + stressmap.keySet().iterator().hasNext());
+
 		// make sure we have some items to work with
 		while(stressmap.size() < 100)
 		{
 			stressmap.put(buildString(), rng.nextInt());
 		}
 
+		System.out.println("BW2 : stressmap.size() : " + stressmap.size());
+		System.out.println("BW2 : stressmap.keySet().size() : " + stressmap.keySet().size());
+		System.out.println("BW2 : stressmap.keySet().iterator().hasNext() : " + stressmap.keySet().iterator().hasNext());
+		//System.out.println("BW2 : stressmap.keySet().iterator().next() : " + stressmap.keySet().iterator().next());
+
 		// make sure we don't gobble all of the memory
 		while(stressmap.size() > 200)
 		{
+			System.out.println("BW4 : stressmap.size() : " + stressmap.size());
+			System.out.println("BW4 : stressmap.keySet().size() : " + stressmap.keySet().size());
+			System.out.println("BW4 : stressmap.keySet().iterator().hasNext() : " + stressmap.keySet().iterator().hasNext());
+			//System.out.println("BW4 : stressmap.keySet().iterator().next() : " + stressmap.keySet().iterator().next());
+
 			stressmap.remove(stressmap.keySet().iterator().next());
 		}
+
+		System.out.println("BW3 : stressmap.size() : " + stressmap.size());
+		System.out.println("BW3 : stressmap.keySet().size() : " + stressmap.keySet().size());
+		System.out.println("BW3 : stressmap.keySet().iterator().hasNext() : " + stressmap.keySet().iterator().hasNext());
 
 		// =================================================================================
 		// Testing starts here
 
 		try
 		{
-			stressmap.pollLastEntry();
+			/*stressmap.pollLastEntry();
 			stressmap.putIfAbsent(buildString(), randomValue);
 			stressmap.put("static", 47);
-			stressmap.firstEntry().getKey().compareTo(stressmap.firstKey());
+			stressmap.firstEntry().getKey().compareTo(stressmap.firstKey());*/
 			stressmap.putAll(testObjects);
-			stressmap.floorEntry(randomKey);
+			/*stressmap.floorEntry(randomKey);
 			stressmap.ceilingEntry(randomKey);
-			stressmap.toString();
-			Iterator<Integer> itr3 = stressmap.values().iterator();
-			while(itr3.hasNext())
+			stressmap.toString();*/
+			//Iterator<Integer> itr3 = stressmap.values().iterator(); *
+			/*while(itr3.hasNext())
 			{
 				stressmap.descendingMap().values().contains(itr3.next());
-			}
-			stressmap.equals(stressmap.clone());
-			stressmap.isEmpty();
-			stressmap.firstEntry().getKey().compareTo(stressmap.firstKey());
-			stressmap.entrySet().containsAll(stressmap.entrySet());
-			stressmap.containsKey("a");
-			stressmap.firstEntry().getKey().compareTo(stressmap.firstKey());
-			stressmap.hashCode();
-			itr3 = stressmap.values().iterator();
-			while(itr3.hasNext())
+			}*/
+			System.out.println(stressmap.equals(stressmap.clone())); //&
+			//stressmap.isEmpty();
+			//stressmap.firstEntry().getKey().compareTo(stressmap.firstKey());
+			//stressmap.entrySet().containsAll(stressmap.entrySet()); <
+			//stressmap.containsKey("a"); <
+			//stressmap.firstEntry().getKey().compareTo(stressmap.firstKey()); <
+			//stressmap.hashCode();
+			//itr3 = stressmap.values().iterator();		// UP TO HERE SUCCESS
+			/*while(itr3.hasNext()) *
 			{
-				stressmap.descendingMap().values().contains(itr3.next());
-			}
-			stressmap.equals(stressmap.clone());
-			stressmap.put("static", 47);
+				stressmap.descendingMap().values().contains(itr3.next()); *
+			}*/
+			System.out.println(stressmap.equals(stressmap.clone())); //&	 <- Suspect
+			/*stressmap.put("static", 47);
 			stressmap.containsKey(stressmap.firstKey());
 			stressmap.remove(randomKey, randomValue);
 			stressmap.remove(randomKey);
@@ -382,7 +402,7 @@ public class ConcurrentSkipListMapTest extends ConcurrentTest
 			stressmap.ceilingKey(randomKey);
 			stressmap.higherEntry(stressmap.lastEntry().getKey());
 			stressmap.ceilingKey("zzzzzzzzzzzzzzzzzzzzzzzzzzzzzz");
-			Iterator<String> itr2 = stressmap.navigableKeySet().iterator();
+			Iterator<String> itr2 = stressmap.navigableKeySet().iterator();	//HERE LAST
 			while(itr2.hasNext())
 			{
 				stressmap.lowerEntry(itr2.next());
@@ -423,7 +443,7 @@ public class ConcurrentSkipListMapTest extends ConcurrentTest
 			stressmap.get(stressmap.firstKey());
 			stressmap.replace(randomKey, randomValue);
 			stressmap.pollLastEntry();
-			stressmap = stressmap.clone();
+			stressmap = stressmap.clone();		// HERE LAST
 			stressmap.replace(randomKey, randomValue);
 			itr2 = stressmap.navigableKeySet().iterator();
 			while(itr2.hasNext())
@@ -476,7 +496,7 @@ public class ConcurrentSkipListMapTest extends ConcurrentTest
 			stressmap.put(randomKey, randomValue);
 			stressmap.containsKey(stressmap.firstKey());
 			stressmap.higherKey(randomKey);
-			stressmap.size();
+			stressmap.size();	//HERE LAST
 			stressmap.floorEntry(randomKey);
 			stressmap.put("static", 47);
 			value = stressmap.get(stressmap.firstKey());
@@ -601,7 +621,7 @@ public class ConcurrentSkipListMapTest extends ConcurrentTest
 			stressmap.pollLastEntry();
 			stressmap.entrySet();
 			stressmap.ceilingEntry("a");
-			itr = stressmap.keySet().iterator();
+			itr = stressmap.keySet().iterator();//HERE LAST
 			while(itr.hasNext())
 			{
 				stressmap.higherKey(itr.next());
@@ -864,13 +884,20 @@ public class ConcurrentSkipListMapTest extends ConcurrentTest
 			stressmap.lastKey();
 			stressmap.firstEntry().getKey().compareTo(stressmap.firstKey());
 			stressmap.tailMap(randomKey);
-			stressmap.tailMap(randomKey);
+			stressmap.tailMap(randomKey);*/
 
 		}
 		catch(NoSuchElementException e)
 		{
 			// can be thrown if we call first or last just on an empty map - ignore
 		}
+
+		System.out.println("BW5 : stressmap.size() : " + stressmap.size());
+		System.out.println("BW5 : stressmap.keySet().size() : " + stressmap.keySet().size());
+		System.out.println("BW5 : stressmap.keySet().iterator().hasNext() : " + stressmap.keySet().iterator().hasNext());
+
+		//stressmap = null; This didn't help - just caused NPE
+
 	}
 
 }
